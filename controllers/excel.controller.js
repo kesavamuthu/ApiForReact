@@ -1,5 +1,5 @@
 let mongoose = require("mongoose");
-let router = require("express").Router();
+// let router = require("express").Router();
 let TableTitles = mongoose.model("ExcelSchema");
 
 mongoose.set("debug", true);
@@ -7,17 +7,14 @@ exports.upload = async function (req, res, next) {
   try {
     let { fileName, title, userName, message } = req.body;
     userName = userName || "anonymous";
-    if (!fileName || !title || (title && message)) {
+    if (!fileName || !title) {
       res.status(400).send({
-        message:
-          title && message
-            ? "It's append one for a file single title is allowed"
-            : "File name and titles are mandatory",
+        message: "File name and titles are mandatory",
       });
       return;
     }
     if (!message) {
-      let tmp = fileName.match(/[a-zA-Z]+/)[0];
+      let tmp = fileName.match(/[a-zA-Z ]+/)[0];
       TableTitles.find(
         { fileName: new RegExp("^" + tmp), userName },
         (error, result) => {
@@ -28,7 +25,7 @@ exports.upload = async function (req, res, next) {
             let number = existsFileName.match(/\d+/) || 1;
             if (number) {
               number++;
-              fileName = existsFileName.match(/[a-zA-Z]+/)[0] + number;
+              fileName = existsFileName.match(/[a-zA-Z ]+/)[0] + number;
             }
           }
           console.log(fileName);
