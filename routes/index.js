@@ -1,19 +1,23 @@
 const mongoose = require("mongoose");
-const { autheticate } = require("../authenticate");
+const { authenticate } = require("../authenticate");
 const Users = mongoose.model("Users");
 const bcrypt = require("bcrypt");
 
 // general_models is used to have models which are general
 module.exports = (app) => {
   console.log("in index ");
-  app.post("/autheticate", function (req, res) {
-    let { email, password } = req.body;
-    if (!email || !password) {
-      res.status(400).send({ msg: "Mandatory details missing" });
+  app.post("/authenticate", async function (req, res) {
+    try {
+      let { email, password } = req.body;
+      if (!email || !password) {
+        res.status(400).send({ msg: "Mandatory details missing" });
+      }
+      let tok = await authenticate(req.body);
+      res.status(200).send({ tok });
+    } catch (error) {
+      console.log(error);
+      res.status(400).send({ msg: "Username or password mismatched" });
     }
-    let tok = autheticate(email, password);
-    console.log(tok);
-    res.status(200).send({ tok });
   });
   app.post("/register", register);
 };

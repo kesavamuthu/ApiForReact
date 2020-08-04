@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 require("./models/db.config");
+require("./models/general_models/UserSchema");
 var app = express();
 let cors = require("cors");
 const jwtGen = require("./config_support/jwtTokenGenerator");
