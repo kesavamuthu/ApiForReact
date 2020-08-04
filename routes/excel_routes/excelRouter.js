@@ -1,5 +1,4 @@
 module.exports = (app) => {
-  require("../../models/db.config");
   require("../../models/excel_models/ExcelSchema");
   const tbController = require("../../controllers/excel.controller");
   const productController = require("../../controllers/product.controller");

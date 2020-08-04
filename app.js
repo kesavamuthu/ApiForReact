@@ -4,14 +4,10 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var indexRouter = require("./routes/g_form_routes/index");
-var usersRouter = require("./routes/g_form_routes/users");
-let testApi = require("./routes/g_form_routes/testApi");
 require("./models/db.config");
 var app = express();
 let cors = require("cors");
-
-// let tmp = require("./models/db.config");https://playcode.io/639200/
+const jwtGen = require("./config_support/jwtTokenGenerator");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -23,11 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
-
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/test", testApi);
-require("./routes/excel_routes/excelRouter")(app);
+app.use(jwtGen());
+require("./routes/mainRouter")(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

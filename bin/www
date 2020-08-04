@@ -82,6 +82,5 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  console.log(cowsay.say({ text: "Listening on " + bind }, "chicken"));
-  console.log(cowsay.say({ text: "checking continuous deploy working " }));
+  console.log(cowsay.say({ text: "Listening on " + bind }));
 }
