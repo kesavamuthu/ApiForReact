@@ -13,6 +13,7 @@ module.exports = (app) => {
         res.status(400).send({ msg: "Mandatory details missing" });
       }
       let tok = await authenticate(req.body);
+      console.log(tok);
       res.status(200).send({ tok });
     } catch (error) {
       console.log(error);
