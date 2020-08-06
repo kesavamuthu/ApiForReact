@@ -9,6 +9,7 @@ module.exports = (app) => {
   app.post("/authenticate", async function (req, res) {
     try {
       let { email, password } = req.body;
+      console.log(req.body);
       if (!email || !password) {
         res.status(400).send({ msg: "Mandatory details missing" });
       }
