@@ -8,6 +8,7 @@ module.exports = (app) => {
   console.log("in index ");
   app.post("/authenticate", async function (req, res) {
     try {
+      console.log("url **************** ", process.env.MONGO_URL, "*********");
       let { email, password } = req.body;
       console.log(req.body);
       if (!email || !password) {
